@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>web</title>
+	<link href="css/html5reset-1.6.1.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery.bxslider/jquery.bxslider.css" rel="stylesheet" type="text/css" />
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="js/jquery.bxslider/jquery.bxslider.js"></script>
+	<script src="js/common.js"></script>
+	
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+	</style>
+
+	<style>
+		*{ margin:0px; padding:0px; box-sizing: border-box; font-family: "Noto Sans TC", sans-serif;}
+
+		ul{ list-style:none;}
+
+		/*預設連結狀態*/
+		a:link, a:visited { color: #010440; text-decoration:none;}
+		a:hover, a:active { color: #ed399c;}
+
+		/*圖片無框*/
+		a img { border:none;}
+		/*去除圖片底下空白*/
+		img{ vertical-align: bottom;} 
+
+		/*h標題設定*/
+		h1{ font-size:30px; font-weight:normal;}
+		h2{ font-size:24px; font-weight:normal;}
+		h3{ font-size:20px; font-weight:normal;}
+		h4{ font-size:18px; font-weight:normal;}
+
+		/*清除 clearfix*/
+		.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+
+		html{ scroll-behavior:smooth;/* 錨點滾動動畫*/
+		-webkit-text-size-adjust:none;/*修正旋轉後文字會變大*/
+		-webkit-overflow-scrolling:touch;/*修正ios滾動順暢*/
+		}
+
+		/*id目標物預留上方空間*/
+		#about, #experience, #abilities, #webDesign, #skills, #aemg, #vision { scroll-margin-top:50px;}
+		
+		body{ background:url("images/bg.png");}
+
+		/*wrapper*/
+		.wrapper{ max-width:1200px; width:100%; margin:0px auto;}
+		/*main*/
+		.main{ display:flex; flex-wrap:wrap; justify-content:center;}
+
+		.footer{ height:100px; background:#eee;}
+
+		/*btn*/
+		button.btn{ border:0px; width:35px; height:35px;}
+		button.btn.btn_open{ margin-bottom:10px; border-radius:10px; background:url("images/btn_open.png"), #e1e1e1; background-size:100% auto; text-indent:100%; white-space:nowrap; overflow:hidden; position:sticky; top:5px; left:5px; z-index:900; border:1px solid #fff;}
+		button.btn.btn_close{ margin-bottom:20px; border-radius:10px; background:url("images/btn_close.png"), rgba(255,255,255,0.3); background-size:100% auto; text-indent:100%; white-space:nowrap; overflow:hidden; position:sticky; top:5px; left:5px; border:1px solid #fff;}
+
+		.side{ display:none;/*初始隱藏*/ width:100%; height:100%; background:rgba(0,0,0,0.55); position:fixed; top:0px; left:0; z-index:999;}
+		.side .inner{ width:45%; height:100%; background:#ff6c54; position:absolute; top:0%; left:-50%; transition: all 0.5s;}
+		.side .inner .menu li{ padding:0px 10px;}
+		.side .inner .menu li a{ display:block; padding:10px 0px; color:#fff; font-weight:600; border-bottom:1px solid #fff;}
+
+
+		/*block_1*/
+		.block_1{ width:100%; padding:20px 20px;}
+		.block_1 .block_title{ margin-bottom:20px;}
+		.block_1 .block_title h3{ display:inline-block; padding:10px 25px; color:#fff; font-weight:700; font-size:22px; border-radius:30px; background:#ff6c54;}
+		.block_1 .block_content{ margin-bottom:10px;}
+
+		@media only screen and (min-width:768px){
+			.block_1{ padding:20px 0px;}
+			.block_1 .block_title h3{ font-size:26px;}
+		} 
+
+		/*self_care*/                            
+		.self_care .box_1{ margin-bottom:10px; text-align:center;}
+		.self_care .box_1 .pic{ width:150px; height:150px; margin:0px auto 10px auto; border-radius:50%; overflow:hidden; border:1px solid #ccc;}
+		.self_care .box_1 .pic img{ width:100%; height:100%; object-fit:cover;}
+		.self_care .box_1 .txt{ border:0px solid red;}
+		.self_care .box_1 .txt h4{ margin-bottom:5px;}
+		.self_care .box_1 .txt em{ display:block; margin-bottom:5px;}
+		.self_care .box_1 .txt a{ display:block; margin-bottom:5px;}
+		.self_care .box_2{ line-height:1.3; margin-bottom:5px; padding:10px 15px; color:#555; border-radius:5px; background-color:#fff; border:1px solid #ccc;}
+
+		@media only screen and (min-width:1000px){
+			.self_care{ display:flex; justify-content:space-around;}
+			.self_care .box_1{ margin-right:40px;}
+		}
+
+		/*exp_txt*/
+		.exp_txt{ margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #aaa;}
+		.exp_txt .box_1 em.date{ display:inline-block; margin-bottom:10px; margin-right:10px; font-style:normal; color:#555;}
+		.exp_txt .box_1 i{ display:inline-block; margin-bottom:10px; padding:3px 15px 5px 15px; font-style:normal; color:#999; font-size:12px; border-radius:15px; border:1px solid #999;}
+		.exp_txt .box_2 strong{ display:block; margin-bottom:10px; font-style:normal; font-weight:800;}
+		.exp_txt .box_2 p{ line-height:1.3; font-size:14px; color:#777;}
+
+		@media only screen and (min-width:768px){
+			.exp_txt{ display:flex; margin-bottom:20px; padding-bottom:5px;}
+			.exp_txt .box_1{ margin-right:10px;}
+			.exp_txt .box_1 em.date{ display:block;}
+		}
+
+		/*chart*/
+		.chart{ opacity:0; transition:3s;}
+		.chart.show{ opacity:1;}
+
+		/*round_chart*/
+		.chart .round{ display:flex; flex-wrap:wrap; justify-content:space-around; text-align:center;} 
+		.chart .round .skill{ width:80px; height:80px; margin-bottom:10px; position:relative;}
+		.chart .round .skill em{ display:block; padding:6px; color:#111; font-style:normal; font-size:10px; border-radius:15px; background:#f8c5c5;}
+		.chart .round .outer{ width:80px; height:80px; margin-bottom:5px; border-radius:50%; box-shadow:3px 3px 5px -1px rgba(0, 0, 0, 0.15), -3px -3px 5px -1px rgba(255, 255, 255, 0.7);}
+		.chart .round .inner{ display:flex; justify-content:center; align-items:center; width:60px; height:60px; border-radius:50%; box-shadow:inset 2px 2px 3px -1px rgba(0, 0, 0, 0.2), inset -2px -2px 3px -1px rgba(255, 255, 255, 0.7); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background:#fff;}
+		.chart .round .number{ text-align:center; font-weight:600; font-size:16px; color:#555;}
+		.chart .round svg{ position:absolute; top:0; left:0; transform:rotate(-90deg);}
+		.chart .round circle{ fill: none; stroke-width: 10px; stroke-linecap:round; stroke-dasharray:225; stroke-dashoffset:225; transition: stroke-dashoffset 1s linear;}
+
+		/*long_chart*/
+		.chart ul.long{ --ww:50%; width:100%; transition:ani_1 1s ease-in-out;}
+		.chart ul.long li{ list-style:none; margin-bottom:20px;}
+		.chart ul.long li h4{ margin-bottom:5px; font-size:14px; font-weight:300;}
+		.chart ul.long .score{ height:10px; background:#ccc; border-radius:15px;}
+
+		.chart.show ul.long .score em{ display:block; height:100%; padding-right:10px; color:#fff; text-align:right; border-radius:15px; animation: ani_1 1.8s ease-in-out forwards;}
+
+		@keyframes ani_1 {
+			0%  { width:0%; background:#fff;}
+			100% { width:var(--ww); background:#786893;}
+		}
+
+		@media only screen and (min-width:768px){
+			.chart ul.long li h4{ margin-bottom:10px; font-size:16px; font-weight:400;}
+			.chart ul.long .score{ height:12px;}
+		}
+
+		/*part_list_2*/
+		.part_list_2{ border:0px solid red;}
+		.part_list_2 a.piece { display:block; width:100%; margin-bottom:20px; position:relative;}
+		.part_list_2 a.piece .pic{ width:100%; margin-bottom:5px; overflow:hidden; border-radius:10px; aspect-ratio:16 / 9; position: relative;}
+		.part_list_2 a.piece .pic::after { content:""; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.45);position:absolute; top:0; left:0; pointer-events:none; transition: linear 0.8s;}
+		.part_list_2 a.piece:hover .pic::after { background-color:rgba(0, 0, 0, 0.1);}
+		.part_list_2 a.piece .pic img{ display:block; width:100%; height:100%; object-fit:cover; transform: scale(1); transition: all 0.5s;} 
+		.part_list_2 a.piece:hover .pic img{ transform: scale(1.05);}
+		.part_list_2 a.piece h4{ line-height:1.3; color:#fff; font-weight:500; font-size:22px; text-shadow:1px 2px 2px rgba(0, 0, 0, 0.5); position:absolute; bottom:40px; left:20px;}
+		.part_list_2 a.piece strong{ width:25px; height:25px; color:#fff; background:url("images/btn_go.png"); background-size:100% auto; text-indent:100%; white-space:nowrap; overflow:hidden; position:absolute; bottom:25px; right:15px;}
+
+		@media only screen and (min-width:600px){
+			.part_list_2{ display:flex; flex-wrap:wrap;}
+			.part_list_2 a.piece { width:48%; margin-right:4%;}
+			.part_list_2 a.piece:nth-of-type(2n){ margin-right:0%;}
+			.part_list_2 a.piece h4{ font-size:18px;}
+		}
+
+		@media only screen and (min-width:1200px){
+			.part_list_2 a.piece { width:30%; margin-right:5%; margin-bottom:40px;}
+			.part_list_2 a.piece:nth-of-type(2n){ margin-right:5%;}
+			.part_list_2 a.piece:nth-of-type(3n){ margin-right:0%;}
+			.part_list_2 a.piece h4{ font-size:22px;}
+		}
+
+		/*part_list_3*/
+		.part_list_3{ border:0px solid red;}
+		.part_list_3 .piece{ margin-bottom:40px;}
+		.part_list_3 .piece .title{ padding:5px 0px; border-radius:5px 5px 0px 0px; background:#ccc;}
+		.part_list_3 .piece .content{ display:flex; flex-wrap:wrap; justify-content:space-around; padding:15px; border-radius:0px 0px 5px 5px; border:1px solid #ccc;}
+		.part_list_3 .piece .content .pic{ width:100%; height:auto; margin-bottom:15px;}
+		.part_list_3 .piece .content .pic:last-child{ margin-bottom:0px;}
+		.part_list_3 .piece .content .pic img{ width:100%; height:100%; object-fit:cover;}
+
+		.part_list_3 .piece .content .ani{ width:100px; height:auto;}
+		.part_list_3 .piece .content .ani img{ width:100%; height:100%; object-fit:cover;}
+
+		/*part_video_1*/
+		.part_video_1 .piece{ width:100%; margin-bottom:40px; overflow:hidden;}
+		.part_video_1 .piece video{ width:100%; margin-bottom:10px; border-radius:10px; border:1px solid #ccc;}
+		.part_video_1 .piece h4{ font-size:16px;}
+
+		@media only screen and (min-width:768px){
+			.part_video_1 .piece h4{ font-size:20px;}
+		}
+
+		/*bxSlider外掛簡易歸零*/
+		.gallery_1 .bx-wrapper .bx-viewport{ border:none; box-shadow:none; left:0px;}
+		.gallery_1 .bx-controls .bx-pager{ padding-top:0px;}
+		.gallery_1 .bx-wrapper .bx-pager, .gallery_1 .bx-wrapper .bx-controls-auto{ position:absolute; bottom:-35px;}
+		.gallery_1 .bx-wrapper .bx-controls-direction a { z-index:50;}
+
+		/*gallery_1 Banner*/
+		.gallery_1{ width:100%; height:auto; margin-bottom:50px;}
+		.gallery_1 .run .inner .piece{ width:100%; overflow:hidden;}
+		.gallery_1 .piece > a{ display:block; width:100%; height:auto;}
+		.gallery_1 .run .inner .piece a img{ width:100%; height:auto;}
+
+		/*修改圓點顏色*/
+		.gallery_1 .bx-wrapper .bx-pager.bx-default-pager a { background:#fff; border:1px solid #705c7e;}
+		.gallery_1 .bx-wrapper .bx-pager.bx-default-pager a:hover,
+		.gallery_1 .bx-wrapper .bx-pager.bx-default-pager a.active { background:#705c7e;}
+		.gallery_1 .bx-wrapper .bx-controls-direction a { width:15px; height:30px;}
+		.gallery_1 .bx-wrapper .bx-prev { background:url("../images/btn_gallery_1.png") no-repeat; background-size:100% auto; background-position:0px 0px;}
+		.gallery_1 .bx-wrapper .bx-next { background:url("../images/btn_gallery_1.png") no-repeat; background-size:100% auto; background-position:0px -30px;}
+
+	</style>
+</head>
+<body>
+	<!--wrapper 開始-->
+	<div class="wrapper">
+		
+		<!--btn_open 開始-->
+		<button class="btn btn_open">open</button>
+		<!--btn_open 結束-->
+		
+		<!--side-->
+		<div class="side">
+			
+			<div class="inner">
+				<!--btn_close 開始-->
+				<button class="btn btn_close">X</button>
+				<!--btn_close 結束-->
+				<ul class="menu">
+					<li><a href="#about">About</a></li>
+					<li><a href="#experience">Experience</a></li>
+					<li><a href="#skills">Skills</a></li>
+					<li><a href="#abilities">Abilities</a></li>
+					<li><a href="#webDesign">Web Design</a></li>
+					<li><a href="#aemg">AE. MG</a></li>
+					<li><a href="#vision">Vision</a></li>
+				</ul>
+			</div>				
+		</div>
+		<!--side-->
+		<!--main 開始-->
+		<div class="main">
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="about">
+					<h3>About</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--self_care 開始-->
+					<div class="self_care">
+						<div class="box_1">
+							<div class="pic"><img src="images/pic.jpg" alt="photo"></div>
+							<div class="txt">
+								<h4>喵喵子</h4>
+								<em>2025/3/05</em>
+								<a itemprop="email" content="w2054120@gmail.com" href="mailto:w2054120@gmail.com">w2054120@gmail.com</a>
+							</div>
+						</div>
+						<div class="box_2">
+							<p>一隻兩隻三隻四隻五隻，海邊路邊街邊逛來逛去，吃吃喝喝，太陽曬曬好睡好眠，喵喵嗚嗚喵喵嗚嗚</p>
+							<p>一隻兩隻三隻四隻五隻，海邊路邊街邊逛來逛去，吃吃喝喝，太陽曬曬好睡好眠，喵喵嗚嗚喵喵嗚嗚</p>
+							<p>一隻兩隻三隻四隻五隻，海邊路邊街邊逛來逛去，吃吃喝喝，太陽曬曬好睡好眠，喵喵嗚嗚喵喵嗚嗚</p>
+							<p>一隻兩隻三隻四隻五隻，海邊路邊街邊逛來逛去，吃吃喝喝，太陽曬曬好睡好眠，喵喵嗚嗚喵喵嗚嗚</p>
+						</div>
+					</div>
+					<!--self_care 結束-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="experience">
+					<h3>Experience</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--exp_txt-->
+					<div class="exp_txt">
+						<div class="box_1">
+							<em class="date">2017-2025</em>
+							<i>7.5y</i>
+						</div>
+						<div class="box_2">
+							<strong>東森新媒體控股股份有限公司</strong>
+							<p>HTML、CSS、JavaScript、UI/UX 設計、Banner設計</p>
+						</div>
+					</div>
+					<!--exp_txt-->
+					<!--exp_txt-->
+					<div class="exp_txt">
+						<div class="box_1">
+							<em class="date">2016-2017</em>
+							<i>1y</i>
+						</div>
+						<div class="box_2">
+							<strong>永和運動中心</strong>
+							<p>Banner設計、後台上架、商品攝影、PhotoShop、行銷文案</p>
+						</div>
+					</div>
+					<!--exp_txt-->
+					<!--exp_txt-->
+					<div class="exp_txt">
+						<div class="box_1">
+							<em class="date">2014-2016</em>
+							<i>2y</i>
+						</div>
+						<div class="box_2">
+							<strong>台大商圈</strong>
+							<p>Banner設計、後台上架、商品攝影、PhotoShop、行銷文案</p>
+						</div>
+					</div>
+					<!--exp_txt-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="abilities">
+					<h3>Abilities</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--chart 開始-->
+					<div class="chart">
+						<!-- 圓 進度條 -->
+						<div class="round">
+							<div class="skill">
+								<div class="outer">
+									<div class="inner">
+										<div class="number" id="num1">0%</div>
+									</div>
+								</div>
+								<svg width="80px" height="80px">
+									<circle id="circle1" cx="40" cy="40" r="35" stroke="url(#GradientColor1)"/>
+								</svg>
+								<em>Web Design</em>
+							</div>
+							<div class="skill">
+								<div class="outer">
+									<div class="inner">
+										<div class="number" id="num2">0%</div>
+									</div>
+								</div>
+								<svg width="80px" height="80px">
+									<circle id="circle2" cx="40" cy="40" r="35" stroke="url(#GradientColor2)"/>
+								</svg>
+								<em>UIUX Design</em>
+							</div>
+							<div class="skill">
+								<div class="outer">
+									<div class="inner">
+										<div class="number" id="num3">0%</div>
+									</div>
+								</div>
+								<svg width="80px" height="80px">
+									<circle id="circle3" cx="40" cy="40" r="35" stroke="url(#GradientColor3)"/>
+								</svg>
+								<em>Motion Design</em>
+							</div>
+							<svg width="0" height="0">
+								<defs>
+									<linearGradient id="GradientColor1"><stop offset="0%" stop-color="#f5795d"/><stop offset="100%" stop-color="#813180"/></linearGradient>
+									<linearGradient id="GradientColor2"><stop offset="0%" stop-color="#f5795d"/><stop offset="100%" stop-color="#813180"/></linearGradient>
+									<linearGradient id="GradientColor3"><stop offset="0%" stop-color="#f5795d"/><stop offset="100%" stop-color="#813180"/></linearGradient>
+								</defs>
+							</svg>
+						</div>
+						<!-- 圓 進度條 -->
+					</div>
+					<!--chart 結束-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="skills">
+					<h3>Skills</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--long_chart 開始--->
+					<div class="chart">
+						<ul class="long">
+							<li>
+								<h4>HTML＆CSS</h4>
+								<div class="score" data-num="92%"><em></em></div>
+							</li>
+							<li>
+								<h4>jQuery</h4>
+								<div class="score" data-num="83%"><em></em></div>
+							</li>
+							<li>
+								<h4>JS</h4>
+								<div class="score" data-num="80%"><em></em></div>
+							</li>
+							<li>
+								<h4>Vue</h4>
+								<div class="score" data-num="50%"><em></em></div>
+							</li>
+							<li>
+								<h4>Adobe PhotoShop</h4>
+								<div class="score" data-num="85%"><em></em></div>
+							</li>
+							<li>
+								<h4>Adobe Illustrator</h4>
+								<div class="score" data-num="82%"><em></em></div>
+							</li>
+							<li>
+								<h4>Adobe After Effects</h4>
+								<div class="score" data-num="78%"><em></em></div>
+							</li>
+							<li>
+								<h4>Adobe XD</h4>
+								<div class="score" data-num="75%"><em></em></div>
+							</li>
+							<li>
+								<h4>Figma</h4>
+								<div class="score" data-num="55%"><em></em></div>
+							</li>
+						</ul>
+					</div>
+					<!--long_chart 結束--->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="webDesign">
+					<h3>Web Design</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--part_list_2 開始-->
+					<div class="part_list_2 clearfix">
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/ETtoday_Pet_Web" target="_blank">
+							<div class="pic"><img src="images/cover_1.jpg" alt="ETtoday_Pet_Web"></div>
+							<h4>ETtoday <br>東森寵物雲</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Personality-test" target="_blank">
+							<div class="pic"><img src="images/cover_2.jpg" alt="Personality-test"></div>
+							<h4>星展銀行 <br>人格測驗</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/12ETtoday_Photo" target="_blank">
+							<div class="pic"><img src="images/cover_3.jpg" alt="12ETtoday_Photo"></div>
+							<h4>ETtoday <br>周年上傳活動</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Vue_count" target="_blank">
+							<div class="pic"><img src="images/cover_4.jpg" alt="Vue_count"></div>
+							<h4>Vue Tab <br>選單切換</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Boom_Game" target="_blank">
+							<div class="pic"><img src="images/cover_5.jpg" alt="Vue_count"></div>
+							<h4>小遊戲 <br>點擊加分互動</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Pineapple_Cake_Web" target="_blank">
+							<div class="pic"><img src="images/cover_6.jpg" alt="Pineapple_Cake_Web"></div>
+							<h4>ETtoday <br>鳳梨酥網站</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Mirror_Web" target="_blank">
+							<div class="pic"><img src="images/cover_7.jpg" alt="Mirror_Web"></div>
+							<h4>ETtoday <br>鏡文學合作</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+						<!--組-->
+						<a class="piece" href="https://nanayeh.github.io/Rotate_Game" target="_blank">
+							<div class="pic"><img src="images/cover_8.jpg" alt="Rotate_Game"></div>
+							<h4>小遊戲 <br>選轉燈號</h4>
+							<strong>Go</strong>
+						</a>
+						<!--組-->
+
+					</div>
+					<!--part_list_2 結束-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="aemg">
+					<h3>AE. MG</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+					<!--part_video_1 開始-->
+					<div class="part_video_1">
+						<!--組-->
+						<div class="piece">
+							<video controls poster="images/cover_double ten.jpg">
+								<source src="images/01_double ten.mp4" type="video/mp4">
+							</video>
+							<h4>動畫-雙十節</h4>
+						</div>
+						<!--組-->
+						<!--組-->
+						<div class="piece">
+							<video controls poster="images/cover_FatherDay.jpg">
+								<source src="images/02_FatherDay.mp4" type="video/mp4">
+							</video>
+							<h4>動畫-父親節</h4>
+						</div>
+						<!--組-->
+						<!--組-->
+						<div class="piece">
+							<video controls poster="images/cover_HalloweenDay.jpg">
+								<source src="images/03_HalloweenDay.mp4" type="video/mp4">
+							</video>
+							<h4>動畫-萬聖節</h4>
+						</div>
+						<!--組-->
+					</div>
+					<!--part_video_1 結束-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+			<!--block_1-->
+			<div class="block_1">
+				<!--block_title 開始-->
+				<div class="block_title" id="vision">
+					<h3>Vision</h3>
+				</div>
+				<!--block_title 結束-->
+				<!--block_content 開始-->
+				<div class="block_content">
+
+					<!--gallery_1 開始-->
+					<div class="gallery_1">
+						<!--run 開始-->
+						<div class="run">
+							<!--inner-->
+							<div class="inner">
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_1.jpg" alt="花季活動主視覺"></a>
+								</div>
+								<!--組-->
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_2.jpg" alt="花季Cover"></a>
+								</div>
+								<!--組-->
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_3.jpg" alt="龍年活動視覺"></a>
+								</div>
+								<!--組-->
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_4.jpg" alt="龍年Cover"></a>
+								</div>
+								<!--組-->
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_5.jpg" alt="車馬費視覺設計"></a>
+								</div>
+								<!--組-->
+								<!--組-->
+								<div class="piece">
+									<a href="#"><img src="images/banner_6.jpg" alt="辦公室門牌視覺設計"></a>
+								</div>
+								<!--組-->
+							</div>
+							<!--inner-->
+						</div>
+						<!--run 結束-->
+					</div>
+					<!--gallery_1 結束-->
+				</div>
+				<!--block_content 結束-->
+			</div>
+			<!--block_1-->
+		</div>
+		<!--main 結束-->
+		<div class="footer">
+
+		</div>
+	</div>
+	<!--wrapper 結束-->
+
+</body>
+</html>
